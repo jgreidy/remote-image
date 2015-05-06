@@ -30,7 +30,7 @@ function remote_image_get_remote_image_views_bulk_operations_form($options) {
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
-    '#default_value' => !empty($options['remote_image_url_field']) ? $options['remote_image_url_field'] : variable_get('remote_image_url_field', ''),
+    '#default_value' => !empty($options['remote_image_url_field']) ? $options['remote_image_url_field'] : '',
   );
   $form['remote_image_image_field'] = array(
     '#type' => 'textfield',
@@ -38,7 +38,7 @@ function remote_image_get_remote_image_views_bulk_operations_form($options) {
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
-    '#default_value' => !empty($options['remote_image_image_field']) ? $options['remote_image_image_field'] : variable_get('remote_image_image_field', ''),
+    '#default_value' => !empty($options['remote_image_image_field']) ? $options['remote_image_image_field'] : '',
   );
   $form['remote_image_filename_field'] = array(
     '#type' => 'textfield',
@@ -46,7 +46,7 @@ function remote_image_get_remote_image_views_bulk_operations_form($options) {
     '#size' => 60,
     '#maxlength' => 128,
     '#required' => TRUE,
-    '#default_value' => !empty($options['remote_image_filename_field']) ? $options['remote_image_filename_field'] : variable_get('remote_image_filename_field', ''),
+    '#default_value' => !empty($options['remote_image_filename_field']) ? $options['remote_image_filename_field'] : '',
   );
 
   return $form;
