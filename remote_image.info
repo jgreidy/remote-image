@@ -1,0 +1,5 @@
+name = Remote Image
+description = Make local copy of a remote image
+core = 7.x
+package = Utilities
+project = remote_image
