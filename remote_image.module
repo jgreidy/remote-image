@@ -12,7 +12,7 @@ function remote_image_action_info() {
   return array(
     'remote_image_get_remote_image' => array(
       'type' => 'node',
-      'label' => t('Search and replace text in a field'),
+      'label' => t('Pull the remote images into their local image fields'),
       'behavior' => array('changes_property'),
       'configurable' => FALSE,
       'vbo_configurable' => TRUE,
