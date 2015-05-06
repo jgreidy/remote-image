@@ -1,7 +1,61 @@
 <?php
 /**
  * @file
- * Code for the Sitepuller feature.
+ * Code for the remote_image feature.
  */
 
-include_once 'sitepuller.features.inc';
+/**
+ * Implements hook_action_info
+ * @return array associative array of action descriptions
+ */
+function remote_image_action_info() {
+  return array(
+    'remote_image_get_remote_image' => array(
+      'type' => 'node',
+      'label' => t('Search and replace text in a field'),
+      'behavior' => array('changes_property'),
+      'configurable' => FALSE,
+      'vbo_configurable' => TRUE,
+      'triggers' => array('any'),
+    ),
+  );
+}
+
+
+function remote_image_get_remote_image_views_bulk_operations_form($options) {
+  $form = array();
+  $form['remote_image_url_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Machine name of the image URL field'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+    '#default_value' => !empty($options['remote_image_url_field']) ? $options['remote_image_url_field'] : variable_get('remote_image_url_field', ''),
+  );
+  $form['remote_image_image_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Machine name of the field where the image will be stored'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+    '#default_value' => !empty($options['remote_image_image_field']) ? $options['remote_image_image_field'] : variable_get('remote_image_image_field', ''),
+  );
+  $form['remote_image_filename_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Machine name of the field that holds the image file name'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+    '#default_value' => !empty($options['remote_image_filename_field']) ? $options['remote_image_filename_field'] : variable_get('remote_image_filename_field', ''),
+  );
+
+  return $form;
+}
+
+function remote_image_get_remote_image(&$node, $context) {
+  $message = t('Node title is %title. Sincerely, %hero', array(
+    '%title' => $node->title,
+    '%hero' => $context['hero'],
+  ));
+  drupal_set_message($message);
+}
