@@ -48,11 +48,33 @@ function remote_image_get_remote_image_views_bulk_operations_form($options) {
     '#required' => TRUE,
     '#default_value' => !empty($options['remote_image_filename_field']) ? $options['remote_image_filename_field'] : '',
   );
+  $form['remote_image_replace_existing'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Replace all existing images'),
+    '#default_value' => empty($options['remote_image_replace_existing']) ? $options['remote_image_replace_existing'] : 0,
+  );
 
   return $form;
 }
 
+function remote_image_get_remote_image_form($settings, &$form_state) {
+  $form = remote_image_get_remote_image_views_bulk_operations_form($settings['settings']);
+  return $form;
+}
+
+function remote_image_get_remote_image_submit($form, $form_state) {
+  $return = array();
+  $return['hero'] = $form_state['values']['hero'];
+  return $return;
+}
+
 function remote_image_get_remote_image(&$node, $context) {
+  $url_field = $context['remote_image_url_field'];
+  $image_field = $context['remote_image_image_field'];
+  $filename_field = $context['remote_image_filename_field'];
+  $wrapper = entity_metadata_wrapper('node', $node);
+  $url = $wrapper->$url_field->value();
+
   $message = t('Node title is %title. Sincerely, %hero', array(
     '%title' => $node->title,
     '%hero' => $context['hero'],
