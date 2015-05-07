@@ -85,11 +85,50 @@ function remote_image_get_remote_image(&$node, $context) {
   $image_field = $context['remote_image_image_field'];
   $filename_field = $context['remote_image_filename_field'];
   $wrapper = entity_metadata_wrapper('node', $node);
+  $image = $wrapper->$image_field->value();
+  if (!empty($image['uri']) && ($context['remote_image_replace_existing'] == 0)) {
+    drupal_set_message(t('"@title" already has an image.', array('@title' => $wrapper->title->value())));
+    return;
+  }
   $url = $wrapper->$url_field->value();
+  if (isset($url['url'])) {
+    $result = drupal_http_request($url['url']);
+    if ($result->code == 200) {
+      $filename = $wrapper->$filename_field->value();
+      $path = $context['remote_image_file_path'] . '/' . $filename;
+      dsm($path);
+      $file_object = file_save_data($result->data, $path, FILE_EXISTS_REPLACE);
+      dsm($file_object);
+      if ($file_object !== FALSE) {
+        // $file = new stdClass();
+        // $file->uid = 1;
+        // $file->uri = $file_path;
+        // $file->filename = basename($file_path);
+        // $file->filemime = file_get_mimetype($file_path);
+        // $file->filesize = filesize($file_path);
+        // $file->status = FILE_STATUS_PERMANENT;
+        // $file->display = '1';
 
-  $message = t('Node title is %title. Sincerely, %hero', array(
-    '%title' => $node->title,
-    '%hero' => $context['hero'],
-  ));
-  drupal_set_message($message);
+        // $oldfile = $wrapper->$image_field->value();
+        // dsm($oldfile);
+
+        // $file = (array) $file;
+        // $items = array($file);
+        $wrapper->$image_field->file->set($file_object);
+        $wrapper->save();
+      }
+      else {
+        drupal_set_message(t('Could not save image for @title', array('@title' => $wrapper->title->value())), 'status', FALSE);
+      }
+    }
+    else {
+      drupal_set_message(t('Could not get image from @path - error @err',
+        array('@path' => $url['url'], '@err' => $result->code)), 'status', FALSE);
+    }
+
+  }
+}
+
+function _remote_image_save_file($data, $path) {
+
 }
