@@ -48,6 +48,14 @@ function remote_image_get_remote_image_views_bulk_operations_form($options) {
     '#required' => TRUE,
     '#default_value' => !empty($options['remote_image_filename_field']) ? $options['remote_image_filename_field'] : '',
   );
+  $form['remote_image_file_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Directory to store the file in (this directory must already exist)'),
+    '#size' => 60,
+    '#maxlength' => 128,
+    '#required' => TRUE,
+    '#default_value' => !empty($options['remote_image_file_path']) ? $options['remote_image_file_path'] : 'public://remote_image',
+  );
   $form['remote_image_replace_existing'] = array(
     '#type' => 'checkbox',
     '#title' => t('Replace all existing images'),
