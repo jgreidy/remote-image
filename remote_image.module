@@ -72,7 +72,11 @@ function remote_image_get_remote_image_form($settings, &$form_state) {
 
 function remote_image_get_remote_image_submit($form, $form_state) {
   $return = array();
-  $return['hero'] = $form_state['values']['hero'];
+  $return['remote_image_url_field'] = $form_state['values']['remote_image_url_field'];
+  $return['remote_image_image_field'] = $form_state['values']['remote_image_image_field'];
+  $return['remote_image_filename_field'] = $form_state['values']['remote_image_filename_field'];
+  $return['remote_image_file_path'] = $form_state['values']['remote_image_file_path'];
+  $return['remote_image_replace_existing'] = $form_state['values']['remote_image_replace_existing'];
   return $return;
 }
 
