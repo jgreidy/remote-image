@@ -96,24 +96,8 @@ function remote_image_get_remote_image(&$node, $context) {
     if ($result->code == 200) {
       $filename = $wrapper->$filename_field->value();
       $path = $context['remote_image_file_path'] . '/' . $filename;
-      dsm($path);
       $file_object = file_save_data($result->data, $path, FILE_EXISTS_REPLACE);
-      dsm($file_object);
       if ($file_object !== FALSE) {
-        // $file = new stdClass();
-        // $file->uid = 1;
-        // $file->uri = $file_path;
-        // $file->filename = basename($file_path);
-        // $file->filemime = file_get_mimetype($file_path);
-        // $file->filesize = filesize($file_path);
-        // $file->status = FILE_STATUS_PERMANENT;
-        // $file->display = '1';
-
-        // $oldfile = $wrapper->$image_field->value();
-        // dsm($oldfile);
-
-        // $file = (array) $file;
-        // $items = array($file);
         $wrapper->$image_field->file->set($file_object);
         $wrapper->save();
       }
