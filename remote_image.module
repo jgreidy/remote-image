@@ -87,7 +87,6 @@ function remote_image_get_remote_image(&$node, $context) {
   $wrapper = entity_metadata_wrapper('node', $node);
   $image = $wrapper->$image_field->value();
   if (!empty($image['uri']) && ($context['remote_image_replace_existing'] == 0)) {
-    //drupal_set_message(t('"@title" already has an image.', array('@title' => $wrapper->title->value())));
     return;
   }
   $url = $wrapper->$url_field->value();
