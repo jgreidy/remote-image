@@ -91,7 +91,11 @@ function remote_image_get_remote_image(&$node, $context) {
   }
   $url = $wrapper->$url_field->value();
   if (isset($url['url'])) {
-    $result = drupal_http_request($url['url']);
+    $options = array(
+      'max_redirects' => 6,
+      'timeout' => 60.0,
+      );
+    $result = drupal_http_request($url['url'], $options);
     if ($result->code == 200) {
       $filename = $wrapper->$filename_field->value();
       $path = $context['remote_image_file_path'] . '/' . $filename;
